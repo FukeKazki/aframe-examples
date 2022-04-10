@@ -24,14 +24,6 @@ window.onload = function() {
     const bigBox = document.querySelector('#big-box')
     let status = "normal"
 
-    bigBox.addEventListener('pointup', function(evt) {
-        if (status === "normal") {
-            status = "big"
-        } else {
-            status = "normal"
-        }
-    });
-
 	handright.addEventListener('triggerdown', function(evt) {
 		const p = handright.getAttribute('position')
 		const snap = 0.1
@@ -68,6 +60,22 @@ window.onload = function() {
         box.setAttribute('color', generateColorCode());
         list.push(box);
     })
+
+    AFRAME.registerComponent('collider-check', {
+    dependencies: ['raycaster'],
+    init: function () {
+        this.el.addEventListener('raycaster-intersection', function () {
+            if (status === "normal") {
+                status = "big"
+            } else {
+                status = "normal"
+            }
+        });
+        this.el.addEventListener('raycaster-intersection-cleared', function () {
+          console.log("out");
+        });
+    }
+});
 }
 </script>
 <a-scene id="scene" background="color: rgba(0, 0, 0, 0.5)">
@@ -97,12 +105,11 @@ window.onload = function() {
     <a-entity id="myobject"></a-entity> -->
 
     <!-- コントローラー -->
-	<a-entity id=handleft hand-controls="hand: left;  handModelStyle: lowPoly; color: #ffcccc">
-        <a-box id="big-box" width="0.1" height="0.1">
-            <a-text>大きい箱</a-text>
+	<a-entity id=handleft hand-controls="hand: left;  handModelStyle: lowPoly; color: #ffcccc" teleport-controls="button:trigger; collisionEntities:.collidable; cameraRig:#cameraRig; teleportOrigin:#head;">
+        <a-box id="big-box" width="0.1" height="0.1" class="collidable">
         </a-box>
     </a-entity>
-	<a-entity id=handright hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc" laser-controls raycaster="showLine: true; far: .05" line="color: white; opacity: 0.75;"></a-entity>
+	<a-entity id=handright hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc" laser-controls raycaster="showLine: true; far: .05" line="color: white; opacity: 0.75;" teleport-controls="button:trigger; collisionEntities:.collidable; cameraRig:#cameraRig; teleportOrigin:#head;"></a-entity>
 
 </a-scene>
 </body>
