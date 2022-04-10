@@ -8,10 +8,10 @@
 <body>
 <script>
 const generateColorCode = () => {
-    let r = ('0' + Math.floor(Math.random() * 255).toString(16)).slice(-2);
-    let g = ('0' + Math.floor(Math.random() * 255).toString(16)).slice(-2);
-    let b = ('0' + Math.floor(Math.random() * 255).toString(16)).slice(-2);
-    let color = '#' + r + g + b;
+    const r = ('0' + Math.floor(Math.random() * 255).toString(16)).slice(-2);
+    const g = ('0' + Math.floor(Math.random() * 255).toString(16)).slice(-2);
+    const b = ('0' + Math.floor(Math.random() * 255).toString(16)).slice(-2);
+    const color = '#' + r + g + b;
     return color;
 }
 
@@ -20,6 +20,7 @@ const generateColorCode = () => {
 window.onload = function() {
 	const scene = document.querySelector('a-scene')
 	const list = []
+
 	handright.addEventListener('triggerdown', function(evt) {
 		const p = handright.getAttribute('position')
 		const snap = 0.1
@@ -39,12 +40,15 @@ window.onload = function() {
 		if (b)
 			scene.removeChild(b)
 	})
+
+    // Bボタンを押したとき
 	handright.addEventListener('bbuttondown', function(evt) {
 		const boxes = scene.querySelectorAll('a-box')
 		for (let i = 0; i < boxes.length; i++)
 			scene.removeChild(boxes[i])
 	})
 
+    // Xボタンを押したとき
     handleft.addEventListener('xbuttondown', function(evt) {
         const box = list.pop();
         box.setAttribute('color', generateColorCode());
@@ -52,13 +56,16 @@ window.onload = function() {
     })
 }
 </script>
-<a-scene>
+<a-scene id="scene" background="color: white">
+    <!-- コンポーネントの定義 -->
 	<a-assets>
-	<a-mixin id="voxel"
-		geometry="primitive: box; height: 0.1; width: 0.1; depth: 0.1"
-		material="shader: standard">
-	</a-mixin>
+        <a-mixin id="voxel"
+            geometry="primitive: box; height: 0.1; width: 0.1; depth: 0.1"
+            material="shader: standard">
+        </a-mixin>
 	</a-assets>
+
+    <!-- コントローラー -->
 	<a-entity id=handleft oculus-touch-controls="hand: left"></a-entity>
 	<a-entity id=handright oculus-touch-controls="hand: right" laser-controls raycaster="showLine: true; far: .05" line="color: white; opacity: 0.75;"></a-entity>
 </a-scene>
