@@ -6,7 +6,8 @@
 	<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 </head>
 <body>
-<script>'use strict'
+<script>
+'use strict'
 window.onload = function() {
 	const scene = document.querySelector('a-scene')
 	const list = []
@@ -34,6 +35,12 @@ window.onload = function() {
 		for (let i = 0; i < boxes.length; i++)
 			scene.removeChild(boxes[i])
 	})
+
+    handleft.addEventListener('xbuttondown', function(evt) {
+        const box = list.pop();
+        box.setAttribute('color', 'red');
+        list.push(box);
+    })
 }
 </script>
 <a-scene>
