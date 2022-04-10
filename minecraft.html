@@ -21,6 +21,17 @@ window.onload = function() {
 	const scene = document.querySelector('a-scene')
 	const list = []
 
+    const bigBox = document.querySelector('#big-box')
+    let status = "normal"
+
+    bigBox.addEventListener('click', function(evt) {
+        if (status === "normal") {
+            status = "big"
+        } else {
+            status = "normal"
+        }
+    });
+
 	handright.addEventListener('triggerdown', function(evt) {
 		const p = handright.getAttribute('position')
 		const snap = 0.1
@@ -30,6 +41,9 @@ window.onload = function() {
 			z: Math.floor(p.z / snap) * snap + snap / 2,
 		}
 		let box = document.createElement('a-box')
+        if (status === "big") {
+            box.setAttribute('geometry', "primitive: box; height: 0.2; width: 0.2; depth: 0.2")
+        }
 		box.setAttribute('position', p2)
 		box.setAttribute('mixin', 'voxel')
 		scene.appendChild(box)
@@ -76,7 +90,9 @@ window.onload = function() {
 
     <!-- コントローラー -->
 	<a-entity id=handleft hand-controls="hand: left;  handModelStyle: lowPoly; color: #ffcccc">
-        <a-text value="Hello, World!"></a-text>
+        <a-box id="big-box" width="0.5" height="0.5">
+            <a-text>大きい箱</a-text>
+        </a-box>
     </a-entity>
 	<a-entity id=handright hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc" laser-controls raycaster="showLine: true; far: .05" line="color: white; opacity: 0.75;"></a-entity>
 
