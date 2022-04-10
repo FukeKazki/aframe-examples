@@ -21,9 +21,6 @@ window.onload = function() {
 	const scene = document.querySelector('a-scene')
 	const list = []
 
-    const bigBox = document.querySelector('#big-box')
-    let status = "normal"
-
 	handright.addEventListener('triggerdown', function(evt) {
 		const p = handright.getAttribute('position')
 		const snap = 0.1
@@ -33,9 +30,6 @@ window.onload = function() {
 			z: Math.floor(p.z / snap) * snap + snap / 2,
 		}
 		let box = document.createElement('a-box')
-        if (status === "big") {
-            box.setAttribute('geometry', "primitive: box; height: 0.2; width: 0.2; depth: 0.2")
-        }
 		box.setAttribute('position', p2)
 		box.setAttribute('mixin', 'voxel')
 		scene.appendChild(box)
@@ -58,8 +52,6 @@ window.onload = function() {
 		list.push(box)
 	})
 
-
-
 	handright.addEventListener('gripdown', function(evt) {
 		const b = list.pop()
 		if (b)
@@ -79,23 +71,6 @@ window.onload = function() {
         box.setAttribute('color', generateColorCode());
         list.push(box);
     })
-
-    // AFRAME.registerComponent('collider-check', {
-    // dependencies: ['raycaster'],
-    // init: function () {
-    //     this.el.addEventListener('raycaster-intersection', function () {
-    //         // if (status === "normal") {
-    //         //     status = "big"
-    //         // } else {
-    //         //     status = "normal"
-    //         // }
-    //         window.open("https://jp.cic.com/", "_blank");
-    //     });
-    //     this.el.addEventListener('raycaster-intersection-cleared', function () {
-    //       console.log("out");
-    //     });
-    // }
-});
 }
 </script>
 <a-scene id="scene" background="color: rgba(0, 0, 0, 0.5)">
@@ -112,24 +87,16 @@ window.onload = function() {
         <a-text value="Hello, World!"></a-text>
     </a-entity>
 
-    <!-- カメラ -->
-    <a-entity camera look-controls>
-        <a-entity cursor="fuse: true; fuseTimeout: 500"
-                  position="0 0 -1"
-                  geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
-                  material="color: black; shader: flat">
-        </a-entity>
-      </a-entity>
     <!-- hit-test -->
     <!-- <a-scene webxr="optionalFeatures:  hit-test;" ar-hit-test="target:#myobject;">
     <a-entity id="myobject"></a-entity> -->
 
     <!-- コントローラー -->
-	<a-entity id=handleft hand-controls="hand: left;  handModelStyle: lowPoly; color: #ffcccc" teleport-controls="button:trigger; collisionEntities:.collidable; cameraRig:#cameraRig; teleportOrigin:#head;">
-        <a-box id="big-box" width="0.1" height="0.1" class="collidable">
-        </a-box>
+	<a-entity id=handleft hand-controls="hand: left;  handModelStyle: lowPoly; color: #ffcccc">
+        <a-text value="ぽえー"></a-text>
     </a-entity>
-	<a-entity id=handright hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc" laser-controls raycaster="showLine: true; far: .05" line="color: white; opacity: 0.75;" teleport-controls="button:trigger; collisionEntities:.collidable; cameraRig:#cameraRig; teleportOrigin:#head;"></a-entity>
+	<a-entity id=handright hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc" laser-controls raycaster="showLine: true; far: .05" line="color: white; opacity: 0.75;"></a-entity>
+
 </a-scene>
 </body>
 </html>
