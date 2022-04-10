@@ -84,13 +84,21 @@ window.onload = function() {
         <a-text value="Hello, World!"></a-text>
     </a-entity>
 
+    <!-- カメラ -->
+    <a-entity camera look-controls>
+        <a-entity cursor="fuse: true; fuseTimeout: 500"
+                  position="0 0 -1"
+                  geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                  material="color: black; shader: flat">
+        </a-entity>
+      </a-entity>
     <!-- hit-test -->
     <!-- <a-scene webxr="optionalFeatures:  hit-test;" ar-hit-test="target:#myobject;">
     <a-entity id="myobject"></a-entity> -->
 
     <!-- コントローラー -->
 	<a-entity id=handleft hand-controls="hand: left;  handModelStyle: lowPoly; color: #ffcccc">
-        <a-box id="big-box" width="0.5" height="0.5">
+        <a-box id="big-box" width="0.1" height="0.1">
             <a-text>大きい箱</a-text>
         </a-box>
     </a-entity>
