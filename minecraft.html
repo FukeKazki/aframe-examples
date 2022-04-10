@@ -70,11 +70,15 @@ window.onload = function() {
         <a-text value="Hello, World!"></a-text>
     </a-entity>
 
+    <!-- hit-test -->
+    <a-scene webxr="optionalFeatures:  hit-test;" ar-hit-test="target:#myobject;">
+    <a-entity id="myobject"></a-entity>
+
     <!-- コントローラー -->
 	<a-entity id=handleft hand-controls="hand: left;  handModelStyle: lowPoly; color: #ffcccc"></a-entity>
 	<a-entity id=handright hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc" laser-controls raycaster="showLine: true; far: .05" line="color: white; opacity: 0.75;"></a-entity>
     <!-- コントローラーに追従するUI -->
-    <a-entity tracked-controls="controller: 0; idPrefix: OpenVR"></a-entity>
+    <!-- <a-entity tracked-controls="controller: 0; idPrefix: OpenVR"></a-entity> -->
 
 </a-scene>
 </body>
