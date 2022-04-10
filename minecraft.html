@@ -70,6 +70,10 @@ window.onload = function() {
         <a-text value="Hello, World!"></a-text>
     </a-entity>
     
+    <!-- カメラ -->
+    <a-entity id="rig" position="25 10 0">
+        <a-entity id="camera" camera look-controls></a-entity>
+    </a-entity>
 
     <!-- コントローラー -->
 	<a-entity id=handleft hand-controls="hand: left;  handModelStyle: lowPoly; color: #ffcccc"></a-entity>
