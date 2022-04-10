@@ -7,6 +7,15 @@
 </head>
 <body>
 <script>
+const generateColorCode = () => {
+    let r = ('0' + Math.floor(Math.random() * 255).toString(16)).slice(-2);
+    let g = ('0' + Math.floor(Math.random() * 255).toString(16)).slice(-2);
+    let b = ('0' + Math.floor(Math.random() * 255).toString(16)).slice(-2);
+    let color = '#' + r + g + b;
+    return color;
+}
+
+
 'use strict'
 window.onload = function() {
 	const scene = document.querySelector('a-scene')
@@ -38,7 +47,7 @@ window.onload = function() {
 
     handleft.addEventListener('xbuttondown', function(evt) {
         const box = list.pop();
-        box.setAttribute('color', 'red');
+        box.setAttribute('color', generateColorCode());
         list.push(box);
     })
 }
