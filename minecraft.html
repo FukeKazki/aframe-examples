@@ -72,8 +72,8 @@ window.onload = function() {
     
 
     <!-- コントローラー -->
-	<a-entity id=handleft hand-controls="hand: left;"></a-entity>
-	<a-entity id=handright hand-controls="hand: right;" laser-controls raycaster="showLine: true; far: .05" line="color: white; opacity: 0.75;"></a-entity>
+	<a-entity id=handleft hand-controls="hand: left;  handModelStyle: lowPoly; color: #ffcccc"></a-entity>
+	<a-entity id=handright hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc" laser-controls raycaster="showLine: true; far: .05" line="color: white; opacity: 0.75;"></a-entity>
 </a-scene>
 </body>
 </html>
