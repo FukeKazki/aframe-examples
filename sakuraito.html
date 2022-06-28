@@ -11,41 +11,24 @@ window.onload = function() {
 	const scene = document.querySelector('a-scene')
   const button = document.querySelector('#button')
 	// const list = []
-  button.addEventListener('click', () => {
-    const box = document.createElement('a-box')
-    box.setAttribute('mixin', 'voxel')
-    box.setAttribute('animation__move', {
-      property: position,
-      to: {
-        x: 10,
-        y: 10,
-        z: 10
-      }
-    })
-		scene.appendChild(box)
-    console.log('追加したよ')
-  })
 
 	handright.addEventListener('triggerdown', function(evt) {
     const box = document.createElement('a-box')
     box.setAttribute('mixin', 'voxel')
-    box.setAttribute('animation__move', {
-      property: position,
-      to: {
-        x: 10,
-        y: 10,
-        z: 10
-      }
+    box.setAttribute('animation', {
+      'property': 'position',
+      'to': {x: 1, y: 1, z: 1}
     })
-	// 	const p = handright.getAttribute('position')
-	// 	const snap = 0.1
-	// 	let p2 = {
-	// 		x: Math.floor(p.x / snap) * snap + snap / 2,
-	// 		y: Math.floor(p.y / snap) * snap + snap / 2,
-	// 		z: Math.floor(p.z / snap) * snap + snap / 2,
-	// 	}
+		const p = handright.getAttribute('position')
+		const snap = 0.1
+		let p2 = {
+			x: Math.floor(p.x / snap) * snap + snap / 2,
+			y: Math.floor(p.y / snap) * snap + snap / 2,
+			z: Math.floor(p.z / snap) * snap + snap / 2,
+		}
 	// 	let box = document.createElement('a-box')
-	// 	box.setAttribute('position', p2)
+		box.setAttribute('position', p2)
+    box.setAttribute('geometry', "primitive: box; height: 0.2; width: 0.2; depth: 0.2")
 	// 	box.setAttribute('mixin', 'voxel')
 		scene.appendChild(box)
 	// 	list.push(box)
@@ -94,7 +77,9 @@ window.onload = function() {
     <a-mixin
       id="voxel"
       geometry="primitive: box; height: 0.1; width: 0.1; depth: 0.1"
-      material="shader: standard">
+      material="shader: standard"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+      >
     </a-mixin>
 	</a-assets>
 
@@ -113,6 +98,14 @@ window.onload = function() {
     </a-entity>
 	<a-entity id=handright hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc" laser-controls raycaster="showLine: true; far: .05" line="color: white; opacity: 0.75;"></a-entity>
 
+  <!-- light -->
+  <a-entity id="light" light="color: #c9e208; intensity: 1.2; type: point"></a-entity>
+
+  <!-- box -->
+  <a-entity geometry=""></a-entity>
+
+  <!-- 地面ほしい -->
+  <!-- ライブ会場ステージみたいな設備ほしい、3dオブジェクト配置しないと距離感つかめない -->
 </a-scene>
 </body>
 </html>
