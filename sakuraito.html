@@ -62,27 +62,27 @@ window.onload = function() {
 		}
 	})
 
-	handright.addEventListener('triggerdown', function(evt) {
-    const box = document.createElement('a-box')
-    box.setAttribute('mixin', 'voxel')
-    box.setAttribute('animation', {
-      'property': 'position',
-      'to': {x: 1, y: 1, z: 1}
-    })
-		const p = handright.getAttribute('position')
-		const snap = 0.1
-		let p2 = {
-			x: Math.floor(p.x / snap) * snap + snap / 2,
-			y: Math.floor(p.y / snap) * snap + snap / 2,
-			z: Math.floor(p.z / snap) * snap + snap / 2,
-		}
-	// 	let box = document.createElement('a-box')
-		box.setAttribute('position', p2)
-    box.setAttribute('geometry', "primitive: box; height: 0.2; width: 0.2; depth: 0.2")
-	// 	box.setAttribute('mixin', 'voxel')
-		scene.appendChild(box)
-	// 	list.push(box)
-	})
+	// handright.addEventListener('triggerdown', function(evt) {
+  //   const box = document.createElement('a-box')
+  //   box.setAttribute('mixin', 'voxel')
+  //   box.setAttribute('animation', {
+  //     'property': 'position',
+  //     'to': {x: 1, y: 1, z: 1}
+  //   })
+	// 	const p = handright.getAttribute('position')
+	// 	const snap = 0.1
+	// 	let p2 = {
+	// 		x: Math.floor(p.x / snap) * snap + snap / 2,
+	// 		y: Math.floor(p.y / snap) * snap + snap / 2,
+	// 		z: Math.floor(p.z / snap) * snap + snap / 2,
+	// 	}
+	// // 	let box = document.createElement('a-box')
+	// 	box.setAttribute('position', p2)
+  //   box.setAttribute('geometry', "primitive: box; height: 0.2; width: 0.2; depth: 0.2")
+	// // 	box.setAttribute('mixin', 'voxel')
+	// 	scene.appendChild(box)
+	// // 	list.push(box)
+	// })
 
   //   handleft.addEventListener('triggerdown', function(evt) {
 	// 	const p = handleft.getAttribute('position')
@@ -156,9 +156,8 @@ window.onload = function() {
 	<a-entity
 		vr-controller
 		id="handright"
-		hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc"
-		laser-controls
-		raycaster="showLine: true; far: .05"
+		laser-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc"
+		raycaster="objects: .collidable; showLine: true; far: .05"
 		line="color: white; opacity: 0.75;"
 	></a-entity>
 
@@ -173,7 +172,7 @@ window.onload = function() {
   <!-- ライブ会場ステージみたいな設備ほしい、3dオブジェクト配置しないと距離感つかめない -->
 	<a-entity id="spotlight-red" light="angle: 0.23; color: #bd4c4c; intensity: 2.49; penumbra: 0.05; type: point"></a-entity>
 	<a-text id="my_text" value="***" position="0 2 -2" scale="1 1 1" align="center" color="#ffffff"></a-text>
-	<a-entity hello-world="" position="-0.08424 3.34842 0" geometry="" material=""></a-entity>
+	<a-entity hello-world="" class="collidable" position="-0.08424 3.34842 0" geometry="" material=""></a-entity>
 	<!-- カメラ！一個！固定！ -->
 	<a-entity camera="" position="0 1.6 11.884" wasd-controls="" rotation="-0.9167324722093172 -2.6791506500317297 0" look-controls="" aframe-injected="" data-aframe-inspector-original-camera=""></a-entity>
 </a-scene>
