@@ -151,13 +151,13 @@ window.onload = function() {
 	<a-entity
 		vr-controller
 		id="handleft"
-		hand-controls="hand: left;  handModelStyle: lowPoly; color: #ffcccc"
+		laser-controls="hand: left;  handModelStyle: lowPoly; color: #ffcccc"
 	></a-entity>
 	<a-entity
 		vr-controller
 		id="handright"
 		laser-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc"
-		raycaster="objects: .collidable; showLine: true; far: .05"
+		raycaster="objects: .collidable; showLine: true; far: 5"
 		line="color: white; opacity: 0.75;"
 	></a-entity>
 
