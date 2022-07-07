@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>boxcraft for Oculus Quest - A-Frame</title>
+	<script src="./three.min.js"></script>
 	<script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
 </head>
 <body>
@@ -10,7 +11,56 @@
 window.onload = function() {
 	const scene = document.querySelector('a-scene')
   const button = document.querySelector('#button')
-	// const list = []
+
+	// コンポーネントを登録
+	AFRAME.registerComponent('hello-world', {
+		init: function() {
+			console.log('hello world')
+			this.directionVec3 = new THREE.Vector3();
+		},
+		update: function() {
+			console.log('updated!')
+		},
+		tick: function() {
+			const currentPosition = this.el.object3D.position;
+			this.el.setAttribute('position', {
+				x: currentPosition.x + this.directionVec3.x,
+				y: currentPosition.y + this.directionVec3.y,
+				z: currentPosition.z + this.directionVec3.z + 0.01
+			})
+		}
+	})
+
+	AFRAME.registerComponent('vr-controller', {
+		dependencies: ["raycaster"],
+		init: function() {
+			console.log("vr-controller");
+			const text = document.getElementById("my_text");
+			text.setAttribute("value", "Controller is ready!?");
+
+			this.el.addEventListener("gripdown", function(e) {
+			text.setAttribute("value", "GripDown!!");
+			});
+			this.el.addEventListener("gripup", function(e) {
+				text.setAttribute("value", "GripUp!!");
+			});
+
+			this.el.addEventListener("triggerdown", function(e) {
+				text.setAttribute("value", "TriggerDown!!");
+			});
+			this.el.addEventListener("triggerup", function(e) {
+				text.setAttribute("value", "TriggerUp!!");
+			});
+
+			this.el.addEventListener("raycaster-intersection", function(e) {
+				text.setAttribute("value", "Intersection:captured");
+			});
+
+			this.el.addEventListener("raycaster-intersection-cleared", function(e) {
+				text.setAttribute("value", "Intersection:cleared");
+			});
+		}
+	})
 
 	handright.addEventListener('triggerdown', function(evt) {
     const box = document.createElement('a-box')
@@ -69,11 +119,16 @@ window.onload = function() {
   //       box.setAttribute('color', generateColorCode());
   //       list.push(box);
   //   })
+
+	// registerした
 }
 </script>
-<a-scene id="scene" background="color: #000">
+<a-scene id="scene" background="color: skyblue">
     <!-- コンポーネントの定義 -->
 	<a-assets>
+		<img src="./images/floor.jpg" alt="床" id="floor">
+		<a-asset-item id="spotlight" src="./Spotlight.glb"></a-asset-item>
+		<a-asset-item id="spotlightStructrure" src="./SpotlightStructure1.glb"></a-asset-item>
     <a-mixin
       id="voxel"
       geometry="primitive: box; height: 0.1; width: 0.1; depth: 0.1"
@@ -84,28 +139,43 @@ window.onload = function() {
 	</a-assets>
 
     <!-- テキスト -->
-    <a-entity position="0 1 -1">
+    <!-- <a-entity position="0 1 -1">
         <a-text value="MetaCraft" id="button"></a-text>
-    </a-entity>
+    </a-entity> -->
 
     <!-- hit-test -->
     <!-- <a-scene webxr="optionalFeatures:  hit-test;" ar-hit-test="target:#myobject;">
     <a-entity id="myobject"></a-entity> -->
 
     <!-- コントローラー -->
-	<a-entity id=handleft hand-controls="hand: left;  handModelStyle: lowPoly; color: #ffcccc">
-        <a-text value="ぽえー"></a-text>
-    </a-entity>
-	<a-entity id=handright hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc" laser-controls raycaster="showLine: true; far: .05" line="color: white; opacity: 0.75;"></a-entity>
+	<a-entity
+		vr-controller
+		id="handleft"
+		hand-controls="hand: left;  handModelStyle: lowPoly; color: #ffcccc"
+	></a-entity>
+	<a-entity
+		vr-controller
+		id="handright"
+		hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc"
+		laser-controls
+		raycaster="showLine: true; far: .05"
+		line="color: white; opacity: 0.75;"
+	></a-entity>
 
-  <!-- light -->
-  <a-entity id="light" light="color: #c9e208; intensity: 1.2; type: point"></a-entity>
+  <!-- 上からの光源 -->
+	<a-entity id="light" position="0 5 0" light="color: #c9e208; intensity: 1.2; type: point"></a-entity>
+  <!-- 床 -->
+	<a-plane src="#floor" height="20" width="20" rotation="-90 0 0"></a-plane>
 
-  <!-- box -->
-  <a-entity geometry=""></a-entity>
+	<a-entity gltf-model="./Spotlight.glb" scale="2 2 2" id="spotlight" rotation="10 27 -0.2" position="-4 3.3 2.4"></a-entity>
 
-  <!-- 地面ほしい -->
+	<a-entity gltf-model="./SpotlightStructure1.glb" scale="2 2 2" id="spotlight" rotation="32.34060274615932 74.72802042993762 119.00505292205739" position="-7.2573 3.07536 -2.70839"></a-entity>
   <!-- ライブ会場ステージみたいな設備ほしい、3dオブジェクト配置しないと距離感つかめない -->
+	<a-entity id="spotlight-red" light="angle: 0.23; color: #bd4c4c; intensity: 2.49; penumbra: 0.05; type: point"></a-entity>
+	<a-text id="my_text" value="***" position="0 2 -2" scale="1 1 1" align="center" color="#ffffff"></a-text>
+	<a-entity hello-world="" position="-0.08424 3.34842 0" geometry="" material=""></a-entity>
+	<!-- カメラ！一個！固定！ -->
+	<a-entity camera="" position="0 1.6 11.884" wasd-controls="" rotation="-0.9167324722093172 -2.6791506500317297 0" look-controls="" aframe-injected="" data-aframe-inspector-original-camera=""></a-entity>
 </a-scene>
 </body>
 </html>
